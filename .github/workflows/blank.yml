@@ -15,18 +15,16 @@ jobs:
       - name: Install SSH Client
         run: sudo apt-get install -y openssh-client openssh-server
 
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v4
-    
-      - name: 📂 Sync files
+      - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-         server: ${{ secrets.ip_address }}
-         username: ${{ secrets.username }}
-         password: ${{ secrets.ftp_password }}
-        run: |
-              "git pull git@github.com:dheerajsr/appentus.git"
+          server: ${{ secrets.ip_address }}
+          username: ${{ secrets.username }}
+          password: ${{ secrets.ftp_password }}
 
       - name: Run Deployment Commands
         run: |
-          ssh -v -o StrictHostKey
+          ssh -v -o StrictHostKeyChecking=no ${{ secrets.username }}@${{ secrets.ip_address }} << EOF
+          git clone git@github.com:dheerajsr/appentus.git
+          # Add any other deployment commands here
+          EOF
