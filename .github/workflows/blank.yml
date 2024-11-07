@@ -24,7 +24,7 @@ jobs:
 
       - name: Run Deployment Commands
         run: |
-          ssh -v -o StrictHostKeyChecking=no ${{ secrets.username }}@${{ secrets.ip_address }} << EOF
+          ssh -v -o StrictHostKeyChecking=no ${{ secrets.username }}@${{ secrets.ip_address }} -p 21 << EOF
           git clone git@github.com:dheerajsr/appentus.git
           # Add any other deployment commands here
           EOF
